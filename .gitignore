@@ -1,0 +1,4 @@
+.DS_Store
+stock_dashboard/__pycache__
+stock_dashboard/settings.py
+stock/__pycache__

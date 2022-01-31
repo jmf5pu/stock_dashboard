@@ -1,0 +1,293 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+<style>
+
+th,
+td {
+  padding: 12px 15px;
+}
+
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.megamenu {
+  position: static;
+}
+
+.megamenu .dropdown-menu {
+  background: none;
+  border: none;
+  width: 100%;
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+body {
+  background: #eaafc8;
+  background: -webkit-linear-gradient(to left, #eaafc8, #654ea3);
+  background: linear-gradient(to left, #eaafc8, #654ea3);
+  min-height: 100vh;
+}
+
+code {
+  color: #745eb1;
+  background: #fff;
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.text-uppercase {
+  letter-spacing: 0.08em;
+}
+
+div::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f500;
+}
+
+div::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f500;
+}
+
+div::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #fff;
+}
+
+</style>
+{% if user.is_authenticated %}
+<!-- <div class="col-lg-5 col-xl-4 px-0 d-none d-lg-block" style="background: center center url(https://res.cloudinary.com/mhmd/image/upload/v1556990826/mega_bmtcdb.png)no-repeat; background-size: cover;"></div> -->
+<!-- <h1 style="font-family:sans-serif; font-weight:bold;">Welcome Back, {{ user.username }}!&emsp;<a href="{% url 'logout' %}"><button class="red">Log Out</button></a></h1>
+  <div style="overflow-y:scroll; height:950px; float: left;">
+    <table class="green_table">
+      <thead>
+        <tr>
+          <th COLSPAN="1">
+            <a href="{% url 'remove_asset' %}"><button class="back">REMOVE</button></a>
+          </th>
+          <th COLSPAN="1">
+            <a href="{% url 'add_asset' %}"><button class="button">ADD</button></a>
+          </th>
+        </tr>
+        <tr>
+          <th>SYMBOL</th>
+          <th># OF SHARES</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for asset in user.profile.assets.all %}
+        <tr>
+          <td>
+            {{ asset.name }}
+          </td>
+          <td>
+            {{ asset.quantity }}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td>No assets!</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id="container" style="float: right; width: 75%;">
+    <canvas id="pie-chart"></canvas>
+    <p style="text-align: center; font-family: sans-serif; font-weight: bold; font-size: 50px;">${{ user.profile.total|floatformat:2 }}</p>
+  </div> -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+    <a href="#" class="navbar-brand font-weight-bold d-block d-lg-none">MegaMenu</a>
+    <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarContent" class="collapse navbar-collapse">
+      <ul class="navbar-nav mx-auto">
+        <!-- Megamenu-->
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link font-weight-bold text-uppercase"><div style="color: black;">Home</div></a></li>
+        <li class="nav-item"><a href="{% url 'add_asset' %}" class="nav-link font-weight-bold text-uppercase">Buy</a></li>
+        <li class="nav-item"><a href="{% url 'remove_asset' %}" class="nav-link font-weight-bold text-uppercase">Sell</a></li>
+        <li class="nav-item"><a href="{% url 'info' %}" class="nav-link font-weight-bold text-uppercase">Info</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link font-weight-bold text-uppercase">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <section class="py-5 text-white">
+    <div class="container-fluid">
+      <div class="row"  style="direction:rtl; overflow: auto;float: left; width: auto; height: calc(85vh - 75px); margin-left: 2vh;">
+          <div class="col-lg-8 mx-auto text-center" style="direction:ltr">
+            <table>
+              <thead>
+                <!-- <tr>
+                  <th COLSPAN="1">
+                    <a href="{% url 'remove_asset' %}"><button class="back">REMOVE</button></a>
+                  </th>
+                  <th COLSPAN="1">
+                    <a href="{% url 'add_asset' %}"><button class="button">ADD</button></a>
+                  </th>
+                </tr> -->
+                <tr>
+                  <th>SYMBOL</th>
+                  <th># OF SHARES</th>
+                  <th>UPDATED</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for asset in user.profile.assets.all %}
+                <tr>
+                  <td>
+                    {{ asset.name }}
+                  </td>
+                  <td>
+                    {{ asset.quantity|floatformat:3 }}
+                  </td>
+                  <td>
+                    {{ asset.last_updated }}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td>No assets!</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <div class="row pt-5" style="float: right; width: 70%;">
+        <div class="col-lg-10 mx-auto">
+          <div id="container">
+            <canvas id="pie-chart"></canvas>
+            {% if user.profile.total != null %}
+            <p class="lead mb-0" style="text-align: center; font-size: 50px;"><code>${{ user.profile.total|floatformat:2 }}</code></p>
+            {% else %}
+            <p class="lead mb-0" style="text-align: center; font-size: 50px;"><code>$0.00</code></p>
+            {% endif %}
+            <!-- <p class="lead mb-0" style="text-align: center; font-size: 50px;"><code>${{ avg_pe|floatformat:2 }}</code></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    function replaceAll(string, search, replace) {
+      return string.split(search).join(replace);
+    }
+
+    function generateColors(length) {
+      var color_array = [];
+      var delta = 0x0;
+      var base = 0xff0000;
+      for(let i = 0; i < length; i++){
+        var temp = (base+delta).toString(16);
+        console.log("temp: " + temp);
+        console.log("temp length: " + temp.length);
+        while(temp.length < 6){
+          temp += "0";
+        }
+        if(temp.length > 6){
+          temp = temp.substring(0, 6)
+        }
+        var element = '#';
+        element += temp;
+        console.log(element);
+        console.log(temp.substring(0, 6))
+        color_array.push(element);
+        delta += 0x017713;
+      }
+      return color_array;
+    }
+
+    var the_data = "{{ data|safe }}"
+    the_data = replaceAll(the_data,'[', '');
+    the_data = replaceAll(the_data,']', '');
+    the_data = replaceAll(the_data,' ', '');
+    var data_list = the_data.split(',');
+
+    var data_labels = "{{ labels|safe }}";
+    data_labels = replaceAll(data_labels,'[', '');
+    data_labels = replaceAll(data_labels,']', '');
+    data_labels = replaceAll(data_labels,' ', '');
+    data_labels = replaceAll(data_labels,'\'', '');
+    var data_labels = data_labels.split(',');
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: data_list,
+          backgroundColor: generateColors(data_labels.length),
+          label: 'Portfolio',
+          borderWidth: 0
+        }],
+        labels: data_labels
+      },
+      options: {
+        legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 12
+                }
+            },
+        tooltips: {
+          mode: 'index',
+          callbacks: {
+            afterLabel: function(tooltipItem, data) {
+              let sum = 0
+              for (let i = 0; i < data_list.length; i++) {
+                sum += parseFloat(data_list[i]);
+              }
+              var percent = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] / sum * 100;
+              percent = percent.toFixed(2); // make a nice string
+              return data.datasets[tooltipItem.datasetIndex].label + ': ' + percent + '%';
+            }
+          }
+        },
+        responsive: true
+      }
+    };
+ 
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+  </script>
+{% else %}
+<section class="py-5 text-white">
+<div style="text-align: center; font-size: 35px;">
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}"><code>Login</code></a> / <a href="{% url 'signup' %}"><code>Signup</code></a>
+</div>
+</section>
+{% endif %}
+{% endblock %}
+
+<!-- Page Wrapper -->

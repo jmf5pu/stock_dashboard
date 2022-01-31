@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}login{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %} 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+  body {
+      background: #eaafc8;
+      background: -webkit-linear-gradient(to left, #eaafc8, #654ea3);
+      background: linear-gradient(to left, #eaafc8, #654ea3);
+      min-height: 100vh;
+    }
+    
+    code {
+      color: #745eb1;
+      background: #fff;
+      padding: 0.1rem 0.2rem;
+      border-radius: 0.2rem;
+    }
+    
+    .text-uppercase {
+      letter-spacing: 0.08em;
+    }
+    button {
+    background:none!important;
+    border:none; 
+    padding:0!important;
+    /*border is optional*/
+    border-bottom:0px solid #444; 
+}
+</style>
+<section class="py-5 text-white">
+<form method="post" class="lead mb-0" style="text-align: center;">
+  {% csrf_token %}
+  {{ form | crispy }}
+  <br>
+  <button class="button" type="submit" style="font-size: 35px;"><code>LOGIN</code></button>
+</form>
+</section>
+{% endblock %}

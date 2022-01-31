@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Info{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+  .megamenu {
+    position: static;
+  }
+
+  .megamenu .dropdown-menu {
+    background: none;
+    border: none;
+    width: 100%;
+  }
+  body {
+      background: #eaafc8;
+      background: -webkit-linear-gradient(to left, #eaafc8, #654ea3);
+      background: linear-gradient(to left, #eaafc8, #654ea3);
+      min-height: 100vh;
+    }
+    
+    code {
+      color: #745eb1;
+      background: #fff;
+      padding: 0.1rem 0.2rem;
+      border-radius: 0.2rem;
+    }
+    
+    .text-uppercase {
+      letter-spacing: 0.08em;
+    }
+    button {
+    background:none!important;
+    border:none; 
+    padding:0!important;
+    /*border is optional*/
+    border-bottom:0px solid #444; 
+}
+</style>
+{% if user.is_authenticated %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+    <a href="#" class="navbar-brand font-weight-bold d-block d-lg-none">MegaMenu</a>
+    <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarContent" class="collapse navbar-collapse">
+      <ul class="navbar-nav mx-auto">
+        <!-- Megamenu-->
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link font-weight-bold text-uppercase">Home</a></li>
+        <li class="nav-item"><a href="{% url 'add_asset' %}" class="nav-link font-weight-bold text-uppercase">Buy</a></li>
+        <li class="nav-item"><a href="{% url 'remove_asset' %}" class="nav-link font-weight-bold text-uppercase">Sell</a></li>
+        <li class="nav-item"><a href="{% url 'info' %}" class="nav-link font-weight-bold text-uppercase"><div style="color: black;">Info</div></a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link font-weight-bold text-uppercase">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+<section class="py-5 text-white">
+<div style="text-align: center; font-size: 20px;" class="lead mb-0">
+    <div style="display: inline-block; text-align: left; max-width: 60vh">
+        <p>Disclaimer: References and opinions found on this site are for information purposes only and are not intended to be investment advice. Seek a duly licensed professional for investment advice.</p>
+        <p>Data gathered from <code><a href="https://www.marketwatch.com" target="_blank" rel="noopener noreferrer">www.marketwatch.com</a></code></p>
+        <p>Email: jmf5pu@virginia.edu</p>
+    </div>
+</div>
+</section>
+{% else %}
+<section class="py-5 text-white">
+<div style="text-align: center; font-size: 35px;">
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}"><code>Login</code></a> / <a href="{% url 'signup' %}"><code>Signup</code></a>
+</div>
+</section>
+{% endif %}
+{% endblock %}
